@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span>함수형 : </span> <input id="txt1" type="text" onchange="enter()"><br>
+    <p id="p1"></p>
+    <hr>
+    <span>이벤트 리스너 : </span> <input id="txt2" type="text"><br>
+    <p id="p2"></p>
+</body>
+<script>
+    function enter(){
+        var txt1 = document.getElementById('txt1').value
+        document.getElementById("p1").innerHTML = txt1
+    }
+
+    document.getElementById("txt2").addEventListener('change', function(){
+            document.getElementById('p2').innerHTML = this.value;
+        })
+</script>
+</html>

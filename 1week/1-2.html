@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="one"> +
+    <input type="text" id="two"> =
+    <input type="text" id="result">
+    <input type="button" id="btn" value="계산" onclick="calc()">
+    <input type="button" id="btn2" value="계산2" onclick="calc()">
+    <h1 id="result2">???</h1>
+</body>
+<script>
+    // 첫번째 방법 : 버튼 자체에서 연결 함수 정의
+    function calc() {
+        var getOne = document.getElementById('one').value;
+        var getTwo = document.getElementById('two').value;
+        document.getElementById('result').value = parseInt(getOne) + parseInt(getTwo);
+        document.getElementById('result2').innerHTML = parseInt(getOne) + parseInt(getTwo);
+    }
+
+    // 두번째 방법 : 리스너 사용
+    var btn2 = document.getElementById("btn2");
+
+    function calc2() {
+        var getOne = document.getElementById("one").value
+        var getTwo = document.getElementById("two").value
+        document.getElementById('result').value = parseInt(getOne) + parseInt(getTwo);
+        document.getElementById('result2').innerHTML = parseInt(getOne) + parseInt(getTwo);
+    }
+    btn2.addEventListener('click', calc2)
+</script>
+
+</html>

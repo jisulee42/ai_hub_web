@@ -1,0 +1,46 @@
+/* h2 a {
+    float: left;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    padding-right: 10px;
+}
+
+li {
+    float: left;
+}
+  
+li a {
+    display: block;
+    padding: 8px;
+    background-color: #dddddd;
+} */
+#topMenu {            
+    height: 30px; 
+    /* width: 850px;  */
+    left:350px;
+}
+#topMenu ul li {               
+    list-style: none;          
+    color: white;              
+    background-color: #2d2d2d; 
+    float: right;               
+    line-height: 30px;         
+    vertical-align: middle;    
+    text-align: right;        
+}
+#topMenu .menuLink {           
+    text-decoration:none;      
+    color: white;              
+    display: block;            
+    width: 150px;              
+    font-size: 12px;           
+    font-weight: bold;                         
+    font-family: "Trebuchet MS", Dotum, Arial; 
+}
+#topMenu .menuLink:hover {            
+    color: red;                 
+    background-color: #4d4d4d;   
+}
