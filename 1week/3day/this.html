@@ -1,0 +1,23 @@
+<script>
+    let o = {
+        o1:function(){
+            console.log(this);
+        },
+        o2: ()=>{
+            console.log(this)
+            let o3=()=>{
+                console.log(this);
+            }
+            o3();
+        },
+        o3:function() {
+            console.log(this);
+            let o4=()=>{
+                console.log(this)
+            }
+            o4();
+        }
+        
+    }
+    o.o1();
+</script>

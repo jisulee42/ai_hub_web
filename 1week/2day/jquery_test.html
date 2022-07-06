@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <p id="Hi" class="Hi2">안녕하세요.</p>
+    <input type="text" id="Hi3" value="반갑습니다">
+    <button id="btn">클릭</button>
+</body>
+<script>
+    var hi = $("#Hi").text();
+    var hi2 = $(".Hi2").text();
+    var hi3 = $("#Hi3").val();
+    console.log(hi);
+    console.log(hi2);
+    console.log(hi3);
+    
+    // $("#btn").on("click", function(){
+    //     alert("안녕하세요");
+    // })
+
+    $(document).ready(function () {
+        $("button[id='btn']").click(function () {
+            alert("반갑습니다!");
+        });
+    });
+</script>
+</html>

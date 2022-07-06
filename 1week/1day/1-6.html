@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>numberCount</title>
+</head>
+<body>
+    <input type="text" id="result" value=1>
+    <button type="button" onclick="plusCal()" id="plusBtn">+</button>
+    <button type="button" onclick="minusCal()" id="minusBtn">-</button>
+</body>    
+<script>
+    
+    function plusCal(){
+        var num = document.getElementById("result").value;
+        var result = parseInt(num) + 1 ;
+        document.getElementById('result').value = result;
+    }
+    function minusCal(){
+        var num = document.getElementById("reuslt").value;
+        var result = parseInt(num) - 1 ;
+        document.querySelector('#result').value = result;
+
+    }
+</script>
+</html> 

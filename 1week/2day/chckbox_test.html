@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>식사</h1>
+    <hr>
+    <ul>
+        <li>치킨<input type="checkbox" id="a" value="치킨"></li>
+        <li>피자<input type="checkbox" id="b" value="피자"></li>
+        <li>족발<input type="checkbox" id="c" value="족발"></li>
+        <button id="btn" onclick="result()")>결과보기</button>
+    </ul>
+    결과값 :
+    <h2 id="menu"></h2>
+</body>
+<script>
+    function result(){
+        var inp = document.getElementsByTagName('input')
+        var txt = ""
+        for (var i=0; i<inp.length; i++){
+            if(inp[i].checked)
+                txt += inp[i].getAttribute("value") + "<br>";
+        }
+        document.getElementById("menu").innerHTML= txt;
+    }
+</script>
+</html>
