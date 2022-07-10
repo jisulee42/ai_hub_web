@@ -1,0 +1,9 @@
+<script>
+  let promise = new Promise((resolve, reject) =>{
+    let ran = Math.random();
+    if(ran < 0.5) {
+      return reject("실패");
+    }
+    resolve(10);
+  })
+</script>
