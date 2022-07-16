@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <title>시작</title>
+</head>
+<body>
+    <h3>안녕하세요</h3>
+    <h1>안녕ㅎㅇ</h1>
+    <button onclick="getDate()">버튼</button>
+</body>
+<script>
+    function getDate(){
+        $.ajax({
+            method:"GET",
+            url:"http://localhost:8081/get/list",
+            success: function(data){
+                console.log(data)
+            }
+
+        })
+    }
+</script>
+</html>
