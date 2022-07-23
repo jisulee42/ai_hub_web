@@ -14,25 +14,45 @@ const getList = () => {
     $.ajax({
         type: 'GET',
         url: 'http://localhost:8080/posts/',
+        headers: {
+            accessToken: $.cookie("accessToken")
+        },
         success: (res) => {
             console.log(res)
             //게시글 리스트 : 3번
             //응답받은 json 형태의 data를 배열이므로 map 함수를,
             //사용하여 listData에 html태그를 담습니다.
             res.map((it, index) => {
-                let listData = `<tr>
-                <th scope="row">${index + 1}</th>
-                <td>${it.title}</td>
-                <td>elice</td>
-                <td>
-                    <button type="button" onclick="deletePost('${it.shortId}')" class="btn btn-outline-danger">delete</button>
-                    <button type="button" onclick="updatePost('${it.shortId}')" class="btn btn-outline-warning">update</button>
-                </td>
-                </tr>`;
+                let listData;
+                if (sessionStorage.getItem("email") == it.author.email) { //만약에 자기 게시글이면 버튼이 보이고.
+                    listData = `<tr>
+                    <th scope="row">${index + 1}</th>
+                    <td>${it.title}</td>
+                    <td>${it.author.name}</td>
+                    <td>
+                        <button type="button" onclick="deletePost('${it.shortId}')" class="btn btn-outline-danger">delete</button>
+                        <button type="button" onclick="updatePost('${it.shortId}')" class="btn btn-outline-warning">update</button>
+                    </td>
+                    </tr>`;
+                } else { //자기 게시글이 아니면 버튼이 안보이고.
+                    listData = `<tr>
+                    <th scope="row">${index + 1}</th>
+                    <td>${it.title}</td>
+                    <td>${it.author.name}</td>
+                    <td>
+                    </td>
+                    </tr>`;
+                }
+
                 //listData에 데이터를 담아준 후, postsList라는 클래스에
                 //append를 해줍니다.
                 $(".postsList").append(listData);
             })
+        },
+        error: (res) => {
+            console.log(res);
+            alert(res.responseJSON.message);
+            location.href = "/view/user/login.html";
         }
     });
 }
@@ -41,13 +61,16 @@ const getList = () => {
 const deletePost = (shortId) => {
 
     //가져온 shortId를 ajax로 사용하여 서버에 넘겨줍니다.
-    
+
     //게시글 삭제 : 1번
     $.ajax({
         type: "GET",
         url: `http://localhost:8080/posts/${shortId}/delete`,
+        headers: {
+            accessToken: $.cookie("accessToken")
+        },
         success: (res) => {
-            
+
             //게시글 삭제 : 3번
             alert(res.result);
             getList();

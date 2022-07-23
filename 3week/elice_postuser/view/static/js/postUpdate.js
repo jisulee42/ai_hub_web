@@ -12,6 +12,9 @@ $(document).ready(() => {
     $.ajax({
         type: "GET",
         url: `http://localhost:8080/posts/${shortId}/find`,
+        headers: {
+            accessToken: $.cookie("accessToken")
+        },
         success: (res) => {
             //게시글 찾기 : 3번
             //가져온 title과 content를 #title, #content에 해당하는 input 태그에 넣어줍니다.
@@ -49,6 +52,9 @@ const updatePost = () => {
         type: 'POST',
         url: `http://localhost:8080/posts/${shortId}/update`,
         data: formData,
+        headers: {
+            accessToken: $.cookie("accessToken")
+        },
         success: (res) => {
             //게시글 수정 3번
             //json 형태로 응답을 받아 res.result를 통해 data를 받습니다.
