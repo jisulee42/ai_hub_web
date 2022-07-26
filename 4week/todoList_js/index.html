@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+  <title>Document</title>
+  <style>
+    .line {
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="text" id="txt">
+  <button onclick="listadd()">버튼</button>
+  <div>
+    <ol id="order"></ol>
+  </div>
+</body>
+<script>
+  let lis = []
+
+  const deleteItem = () => {
+    const element = event.target.parentElement
+    element.remove()
+  }
+
+  const completeItem = () => {
+    const element = event.target.parentElement
+    element.classList.add('line')
+  }
+
+  function listadd() {
+
+    //lis.push($("#txt").val())
+    $("#order").append(`
+      <li> ${$("#txt").val()} 
+        <button onclick='deleteItem()'>삭제</button>
+        <button onclick='completeItem()'>완료</button>
+        </li>
+      `)
+    $("#txt").val("")
+
+  } 
+</script>
+
+</html>
