@@ -1,6 +1,9 @@
 import reviewData from "./data/review.json";
+import { useNavigate } from "react-router-dom";
 
 const Review = () => {
+  const navigate = useNavigate();
+
   return (
     <main>
 
@@ -13,7 +16,8 @@ const Review = () => {
               또한 삭제, 수정이 가능합니다.
             </p>
             <p>
-              <button className="btn btn-primary my-2 m-1">Create Review</button>
+              <button onClick={()=>{navigate('/review/create')}} 
+                className="btn btn-primary my-2 m-1">Create Review</button>
             </p>
           </div>
         </div>
