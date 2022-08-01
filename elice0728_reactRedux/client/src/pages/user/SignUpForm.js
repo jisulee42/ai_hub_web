@@ -66,7 +66,7 @@ const SignUpForm = ({ signUpData, onChangeSignUpData, setSignUpData }) => {
       <div className="container">
         <form>
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">
+            <label htmlFor="email" className="form-label text-light">
               Email address
             </label>
             <input
@@ -79,12 +79,12 @@ const SignUpForm = ({ signUpData, onChangeSignUpData, setSignUpData }) => {
               aria-describedby="emailHelp"
               ref={emailRef}
             />
-            <div id="emailHelp" className="form-text">
+            <div id="emailHelp" className="form-text text-light">
               We'll never share your email with anyone else.
             </div>
           </div>
           <div className="mb-3">
-            <label htmlFor="password" className="form-label">
+            <label htmlFor="password" className="form-label text-light">
               Password
             </label>
             <input
@@ -97,7 +97,7 @@ const SignUpForm = ({ signUpData, onChangeSignUpData, setSignUpData }) => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="rePassword" className="form-label">
+            <label htmlFor="rePassword" className="form-label text-light">
               Re-Password
             </label>
             <input
@@ -110,7 +110,7 @@ const SignUpForm = ({ signUpData, onChangeSignUpData, setSignUpData }) => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="name" className="form-label">
+            <label htmlFor="name" className="form-label text-light">
               Name
             </label>
             <input

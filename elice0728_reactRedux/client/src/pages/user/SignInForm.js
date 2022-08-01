@@ -51,7 +51,7 @@ const SignInForm = ({ signInData, onChangeSignInData }) => {
             className="col-md-4 my-4"
             style={{ float: "none", margin: "0 auto" }}
           >
-            <label htmlFor="email" className="form-label">
+            <label htmlFor="email" className="form-label text-light">
               E-mail
             </label>
             <input
@@ -68,7 +68,7 @@ const SignInForm = ({ signInData, onChangeSignInData }) => {
             className="col-md-4 my-4"
             style={{ float: "none", margin: "0 auto" }}
           >
-            <label htmlFor="password" className="form-label">
+            <label htmlFor="password" className="form-label text-light">
               Password
             </label>
             <input
