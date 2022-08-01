@@ -67,10 +67,12 @@ const Create = () => {
       <div className="container">
         <div className="card mb-3">
           <div className="card-img-top bg-dark" style={{ textAlign: "center" }}>
-            <img
-              src="https://search.pstatic.net/common?type=o&size=174x246&quality=100&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20220720_283%2F1658284839003UzxoT_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2"
-              alt="..."
-            />
+            {createReview.img !== "" ? (
+              <img className="mt-3" src={createReview.img} alt="movie img" />
+            ) : (
+              <></>
+            )}
+            <img className="mt-3" src={createReview.img} alt="..." />
           </div>
 
           <div className="card-body bg-dark text-light">

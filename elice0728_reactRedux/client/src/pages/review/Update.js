@@ -1,24 +1,60 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import port from "./../../data/port.json";
+import { useCookies } from "react-cookie";
+import { useParams } from "react-router-dom";
+
 const Update = () => {
+  const params = useParams();
+  const [shortId, setShortId] = useState("");
+  const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
+  const [updateData, setUpdateData] = useState({});
+
+  useEffect(() => {
+    console.log("upt", params.id);
+
+    findGetReviewData().then((res) => {
+      console.log(res);
+      setUpdateData(res.data);
+    });
+  }, []);
+
+  const findGetReviewData = async () => {
+    return await axios.get(port.url + `/posts/${params.id}/find`, {
+      headers: {
+        accessToken: cookies.userData.accessToken,
+      },
+    });
+  };
+
+  const onChangeUpdateData = (e) => {
+    setUpdateData({
+      ...updateData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <div className="bg-dark">
       <div className="container">
         <div className="card mb-3">
           <div className="card-img-top bg-dark" style={{ textAlign: "center" }}>
-            <img
-              src="https://search.pstatic.net/common?type=o&size=174x246&quality=100&direct=true&src=https%3A%2F%2Fs.pstatic.net%2Fmovie.phinf%2F20220720_283%2F1658284839003UzxoT_JPEG%2Fmovie_image.jpg%3Ftype%3Dw640_2"
-              alt="..."
-            />
+            <img className="mt-3" src={updateData.img} alt="..." />
           </div>
 
           <div className="card-body bg-dark text-light">
-            <h5 className="card-title">Movie Image</h5>
-            <p className="card-text">Img Example</p>
+            {/* <h5 className="card-title">Movie Image</h5> */}
+            <p className="card-text">Image Path</p>
             <input
               type="text"
               className="form-control"
               id="img"
               name="img"
               placeholder="사진 URL을 입력해주세요 "
+              defaultValue={updateData.img}
+              onChange={onChangeUpdateData}
+              disabled
             />
             <p className="card-text">
               <small className="text-muted ">url...</small>
@@ -36,6 +72,8 @@ const Update = () => {
               id="title"
               name="title"
               placeholder="제목을 입력해주세요. "
+              defaultValue={updateData.title}
+              onChange={onChangeUpdateData}
             />
           </div>
           <div className="mb-3">
@@ -46,8 +84,10 @@ const Update = () => {
               className="form-control"
               id="content"
               name="content"
-              rows="3"
+              rows="10"
               placeholder="내용을 입력해주세요."
+              defaultValue={updateData.content}
+              onChange={onChangeUpdateData}
             ></textarea>
           </div>
           <div style={{ textAlign: "right" }}>
@@ -58,7 +98,13 @@ const Update = () => {
             >
               수정
             </button>
-            <button type="button" className="btn btn-danger">
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={() => {
+                window.history.back();
+              }}
+            >
               뒤로가기
             </button>
           </div>

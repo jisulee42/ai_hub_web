@@ -5,7 +5,12 @@ import port from "./data/port.json";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 
+//Redux
+import { useDispatch } from "react-redux";
+import { setData } from "./app/reducer/Data";
+
 const Review = () => {
+  const dispatch = useDispatch(); // action을 사용하기위해 값을 보내주는 역할
   const navigate = useNavigate();
 
   const [reviewData, setReviewData] = useState([]);
@@ -17,21 +22,63 @@ const Review = () => {
   }, []);
 
   const getReviewData = () => {
-    axios
-      .get(port.url + "/posts", {
-        headers: {
-          accessToken: cookies.userData.accessToken,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        setReviewData(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    try {
+      axios
+        .get(port.url + "/posts", {
+          headers: {
+            accessToken: cookies.userData.accessToken,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          setReviewData(res.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } catch (e) {
+      navigate("/");
+    }
   };
 
+  //----------------------------delete---------------------------------
+  const deleteReview = async (shortId) => {
+    return await axios.get(port.url + `/posts/ ${shortId}/delete`, {
+      headers: {
+        accessToken: cookies.userData.accessToken,
+      },
+    });
+  };
+
+  const onClickDeleteButton = (shortId) => {
+    if (window.confirm("삭제 하시겠습니까?")) {
+      console.log(shortId);
+      deleteReview(shortId).then((res) => {
+        let getNewDeleteAfterData = reviewData.filter(
+          (it) => it.shortId !== shortId
+        );
+        setReviewData(getNewDeleteAfterData);
+      });
+    } else {
+      //아니오
+    }
+  };
+
+  //-------------------------------------------------------------------
+
+  //----------------------------update---------------------------------
+  const onClickUpdateButton = (shortId) => {
+    dispatch(setData(shortId));
+    navigate(`/review/${shortId}/update`);
+  };
+
+  //-------------------------------------------------------------------
+
+  //----------------------------detail---------------------------------
+  const onClickDetailButton = (shortId) => {
+    navigate(`/review/${shortId}/detail`);
+  };
+  //-------------------------------------------------------------------
   return (
     <main className="bg-dark">
       <section className="py-5 text-center container">
@@ -80,9 +127,22 @@ const Review = () => {
                     />
                   </div>
                   <div className="card-body bg-dark text-light">
+                    <h3
+                      className="card-title"
+                      onClick={() => {
+                        onClickDetailButton(it.shortId);
+                      }}
+                    >
+                      {it.title}
+                    </h3>
                     <p className="card-text">
                       {it.content.substring(0, it.content.length / 2)}
-                      <a style={{ color: "blue" }}>
+                      <a
+                        style={{ color: "blue" }}
+                        onClick={() => {
+                          onClickDetailButton(it.shortId);
+                        }}
+                      >
                         &nbsp;&nbsp;&nbsp;&nbsp;...상세보기
                       </a>
                     </p>
@@ -91,14 +151,20 @@ const Review = () => {
                         <button
                           type="button"
                           className="btn btn-sm btn-outline-secondary"
+                          onClick={() => {
+                            onClickDeleteButton(it.shortId);
+                          }}
                         >
-                          View
+                          삭제
                         </button>
                         <button
                           type="button"
                           className="btn btn-sm btn-outline-secondary"
+                          onClick={() => {
+                            onClickUpdateButton(it.shortId);
+                          }}
                         >
-                          Edit
+                          수정
                         </button>
                       </div>
                       <small className="text-muted">9 mins</small>
