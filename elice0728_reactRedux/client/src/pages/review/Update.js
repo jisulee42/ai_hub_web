@@ -4,18 +4,18 @@ import { useSelector } from "react-redux";
 import port from "./../../data/port.json";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
+import $ from "jquery";
+import { useNavigate } from "react-router-dom";
 
 const Update = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const [shortId, setShortId] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const [updateData, setUpdateData] = useState({});
 
   useEffect(() => {
-    console.log("upt", params.id);
-
-    findGetReviewData().then((res) => {
-      console.log(res);
+    findGetReviewData(params.id).then((res) => {
       setUpdateData(res.data);
     });
   }, []);
@@ -33,6 +33,44 @@ const Update = () => {
       ...updateData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const onClickChangeUpdateData = () => {
+    if (updateData.img === "") {
+      alert("이미지 경로를 입력해주세요");
+      $("#img").focus();
+      return;
+    }
+
+    if (updateData.title === "") {
+      alert("제목을 입력해주세요");
+      $("#title").focus();
+      return;
+    }
+
+    if (updateData.content === "") {
+      alert("내용을 입력해주세요");
+      $("#content").focus();
+      return;
+    }
+
+    sendUpdateData().then((res) => {
+      console.log(res);
+      alert(res.data.result);
+      navigate("/review/list");
+    });
+  };
+
+  const sendUpdateData = async () => {
+    return await axios.post(
+      port.url + `/posts/${params.id}/update`,
+      updateData,
+      {
+        headers: {
+          accessToken: cookies.userData.accessToken,
+        },
+      }
+    );
   };
 
   return (
@@ -95,6 +133,7 @@ const Update = () => {
               type="button"
               className="btn btn-primary"
               style={{ marginRight: "2%" }}
+              onClick={onClickChangeUpdateData}
             >
               수정
             </button>

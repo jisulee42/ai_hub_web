@@ -15,23 +15,31 @@ const Review = () => {
 
   const [reviewData, setReviewData] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
-
+  const [page, setPage] = useState({
+    page: 1, //현재 보고있는 페이지 번호
+    totalPage: 6, //전체 페이지 수
+  });
   useEffect(() => {
     //렌더링이 되었다면 1번만 실행되는 곳.
-    getReviewData();
+    getReviewData(page.page);
   }, []);
 
-  const getReviewData = () => {
+  const getReviewData = (page) => {
+    console.log(page);
     try {
       axios
-        .get(port.url + "/posts", {
+        .get(port.url + `/posts?page=${page}&perPage=6`, {
           headers: {
             accessToken: cookies.userData.accessToken,
           },
         })
         .then((res) => {
           console.log(res);
-          setReviewData(res.data);
+          setReviewData(res.data.posts);
+          setPage({
+            page,
+            totalPage: res.data.totalPage,
+          });
         })
         .catch((e) => {
           console.log(e);
@@ -41,6 +49,9 @@ const Review = () => {
     }
   };
 
+  const onClickPagination = (page) => {
+    getReviewData(page);
+  };
   //----------------------------delete---------------------------------
   const deleteReview = async (shortId) => {
     return await axios.get(port.url + `/posts/ ${shortId}/delete`, {
@@ -84,7 +95,7 @@ const Review = () => {
       <section className="py-5 text-center container">
         <div className="row py-lg-5">
           <div className="col-lg-6 col-md-8 mx-auto">
-            <h1 className="fw-light text-light">Movie</h1>
+            <h1 className="fw-light text-light">MOVIE</h1>
             <p className="lead text-muted">
               리뷰하고 싶은 영화를 추가하고, 별점을 주세요. <br />
               또한 삭제, 수정이 가능합니다.
@@ -175,6 +186,65 @@ const Review = () => {
             ))}
           </div>
         </div>
+      </div>
+      <div style={{ textAlign: "center" }}>
+        <nav aria-label="..." style={{ display: "inline-block" }}>
+          <ul className="pagination">
+            {page.page - 1 < 1 ? (
+              <></>
+            ) : (
+              <>
+                <li className="page-item disabled">
+                  <a
+                    className="page-link"
+                    onClick={() => onClickPagination(page.page - 1)}
+                  >
+                    Previous
+                  </a>
+                </li>
+                <li className="page-item">
+                  <a
+                    className="page-link"
+                    onClick={() => onClickPagination(page.page - 1)}
+                  >
+                    {page.page - 1}
+                  </a>
+                </li>
+              </>
+            )}
+
+            <li className="page-item active" aria-current="page">
+              <a
+                className="page-link"
+                onClick={() => onClickPagination(page.page)}
+              >
+                {page.page}
+              </a>
+            </li>
+            {page.page + 1 > page.totalPage ? (
+              <></>
+            ) : (
+              <>
+                <li className="page-item">
+                  <a
+                    className="page-link"
+                    onClick={() => onClickPagination(page.page + 1)}
+                  >
+                    {page.page + 1}
+                  </a>
+                </li>
+                <li className="page-item">
+                  <a
+                    className="page-link"
+                    onClick={() => onClickPagination(page.page + 1)}
+                  >
+                    Next
+                  </a>
+                </li>
+              </>
+            )}
+          </ul>
+        </nav>
       </div>
     </main>
   );

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Album } from "./assets/album.svg";
-
+import kakaoLoginButtonImg from "./img/kakao_login_small.png";
 const Header = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["userData"]);
   const navigate = useNavigate();
@@ -65,6 +65,12 @@ const Header = () => {
               ) : (
                 <ul className="list-unstyled">
                   <li>
+                    {/* public 폴더 에서 가져오는 방법 */}
+                    {/* <img src={"/img/kakao_login_small.png"} /> */}
+                    {/* src 폴더에서 가져오는 방법 */}
+                    <img src={kakaoLoginButtonImg} style={{ width: "15%" }} />
+                  </li>
+                  <li>
                     <button
                       onClick={() => navigate("/")}
                       className="btn btn-primary"
@@ -78,8 +84,8 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <div className="navbar navbar-dark bg-dark shadow-sm">
-        <div className="container ">
+      <div className="navbar navbar-dark bg-secondary shadow-sm">
+        <div className="container">
           <a
             href="/review/list"
             className="navbar-brand d-flex align-items-center"

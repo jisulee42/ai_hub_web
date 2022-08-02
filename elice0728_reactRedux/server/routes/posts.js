@@ -36,12 +36,31 @@ router.post("/", async (req, res, next) => {
 });
 
 //게시글 리스트 : 2번
-//게시글 리스트를 가져오기 위해 '/posts/'를 get방식으로 라우팅 되어 접근하게 됩니다.
+//게시글 리스트를 가져오기 위해 '/posts?page=1&perPage=6'를 get방식으로 라우팅 되어 접근하게 됩니다.
 router.get("/", async (req, res, next) => {
   //Post스키마에 해당되는 document들을 find (전부 가져옴)
-  const posts = await Post.find({}).populate("author");
+  // const posts = await Post.find({}).populate("author");
   //가져온 데이터를 posts변수에 담아 json 형태로 응답합니다.
-  res.json(posts);
+
+  // let page = 1;
+  // let perPage = 6; //현재 페이지의 게시글 수
+
+  if (req.query.page < 1) {
+    next("Please enter a number greater than 1"); //Page가 1보다 작다면 오류처리.
+    return;
+  }
+  const page = Number(req.query.page || 1); // req.query.page가 undefined 거나 Null 이면 1을 넣어라. 즉, default=1
+  const perPage = Number(req.query.perPage || 6);
+  const total = await Post.countDocuments({});
+
+  const posts = await Post.find({})
+    .sort({ createdAt: -1 }) // 마지막으로 작성된 게시글을 첫번째 인덱스로 가져옴
+    .skip(perPage * (page - 1)) // ex) 1페이지라면 0번부터, 2페이지라면 5번부터
+    .limit(perPage) // 6개씩 가져와줘
+    .populate("author");
+
+  const totalPage = Math.ceil(total / perPage);
+  res.json({ posts, totalPage });
 });
 
 //게시글 삭제 : 2번
